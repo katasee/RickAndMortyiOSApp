@@ -1,6 +1,6 @@
 //
 //  LocationsView.swift
-//  Rick&Morty
+//  RickAndMorty
 //
 //  Created by Anton on 30/05/2025.
 //

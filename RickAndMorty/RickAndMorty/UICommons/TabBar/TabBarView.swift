@@ -1,6 +1,6 @@
 //
 //  TabBarView.swift
-//  Rick&Morty
+//  RickAndMorty
 //
 //  Created by Anton on 30/05/2025.
 //
@@ -13,12 +13,12 @@ internal struct TabBarView: View {
     
     internal var body: some View {
         TabView(selection: $selection) {
-            CharactersView()
+            CharactersView(dataForAllCharacters: Card.mock())
                 .tabItem {
                     Image(systemName: "person")
                     Text("Characters")
                 }
-            LocationsView()
+            EpisodesView()
                 .tabItem {
                     Image(systemName: "globe")
                     Text("Locations")
