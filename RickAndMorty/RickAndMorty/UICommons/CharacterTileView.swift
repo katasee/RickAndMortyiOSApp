@@ -10,7 +10,7 @@ import Kingfisher
 
 internal struct CharacterTileView: View {
     
-    internal let card: Card
+    internal let card: CharacterModel
     
     internal var body: some View {
         VStack(alignment: .leading) {
@@ -52,13 +52,14 @@ internal struct CharacterTileView: View {
     }
     
     private var cardTitle: some View {
-        Text("Rick Sanchez")
+        Text(card.name)
             .bold()
             .foregroundColor(.black)
+            .lineLimit(1)
     }
     
     private var cardStatus: some View {
-        Text("Status: alive")
+        Text("Status: \(card.status)")
             .font(.subheadline)
             .foregroundColor(.gray)
     }

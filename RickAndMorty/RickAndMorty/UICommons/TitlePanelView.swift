@@ -14,24 +14,20 @@ internal struct TitlePanelView: View {
     internal let color: Color
     
     internal var body: some View {
-        VStack(alignment: .leading, spacing: 20) {
+        VStack(alignment: .leading, spacing: 10) {
             HStack {
                 Image(systemName: "bell")
                     .foregroundColor(color)
                 Text(bellLabel)
             }
             .padding(20)
-
+            Spacer()
             Text(title)
                 .foregroundColor(color)
-                .frame(width: 200, height: 40)
+                .frame(width: 190, height: 40)
                 .background(Color(UIColor.secondarySystemBackground))
                 .foregroundColor(.white)
                 .cornerRadius(5)
         }
     }
-}
-
-#Preview {
-    TitlePanelView(bellLabel: "Dead", title: "STATUS", color: .blue)
 }

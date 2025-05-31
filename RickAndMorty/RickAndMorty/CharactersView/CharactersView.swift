@@ -9,21 +9,26 @@ import SwiftUI
 
 internal struct CharactersView: View {
     
-    private let dataForAllCharacters: Array<Card>
-    
-    internal init(dataForAllCharacters: Array<Card>) {
-        self.dataForAllCharacters = dataForAllCharacters
+    @StateObject private var viewModel: CharactersViewModel
+
+    internal init(
+        viewModel: CharactersViewModel
+    ) {
+        self._viewModel = .init(wrappedValue: viewModel)
     }
     
     internal var body: some View {
         NavigationStack {
             ScrollView {
-            VStack(alignment: .leading) {
+                VStack(alignment: .leading) {
                     title
                     allCards
                 }
             }
             .padding(10)
+            .task {
+                await viewModel.loadCharacters()
+            }
         }
     }
     
@@ -44,16 +49,21 @@ internal struct CharactersView: View {
     
     private var allCards: some View {
         LazyVGrid(columns: columns) {
-            ForEach(dataForAllCharacters, id: \.id) { card in
-                NavigationLink(destination: DetailsView(details: DetailCard.mock())
-                ){
+            ForEach(viewModel.dataForCharactersView, id: \.id) { card in
+                NavigationLink(destination: DetailsView(
+                    details: CharacterModel(
+                        id: card.id,
+                        name: card.name,
+                        status: card.status,
+                        gender: card.gender,
+                        type: card.type,
+                        species: card.species,
+                        image: card.image
+                    ))
+                ) {
                     CharacterTileView(card: card)
                 }
             }
         }
     }
-}
-
-#Preview {
-    CharactersView(dataForAllCharacters: Card.mock())
 }

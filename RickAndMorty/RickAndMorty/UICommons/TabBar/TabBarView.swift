@@ -13,7 +13,7 @@ internal struct TabBarView: View {
     
     internal var body: some View {
         TabView(selection: $selection) {
-            CharactersView(dataForAllCharacters: Card.mock())
+            CharactersView(viewModel: CharactersViewModel())
                 .tabItem {
                     Image(systemName: "person")
                     Text("Characters")

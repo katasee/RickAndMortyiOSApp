@@ -10,11 +10,17 @@ import Kingfisher
 
 internal struct DetailsView: View {
     
-    internal let details: DetailCard
+    internal let details: CharacterModel
+    
+    init(
+        details: CharacterModel
+    ) {
+        self.details = details
+    }
     
     internal var body: some View {
-        VStack(spacing: 30) {
             image
+        VStack(spacing: 30) {
             titlePanel
             Spacer()
                 .navigationBarTitle(
@@ -22,6 +28,7 @@ internal struct DetailsView: View {
                     displayMode: .inline
                 )
         }
+        .padding(10)
     }
     
     private var image: some View {
@@ -33,7 +40,6 @@ internal struct DetailsView: View {
                     ProgressView()
                 }
             })
-//            .aspectRatio(contentMode: .fit)
     }
     
     private let columns: Array<GridItem> = [
@@ -65,8 +71,4 @@ internal struct DetailsView: View {
             )
         }
     }
-}
-
-#Preview {
-    DetailsView(details: DetailCard.mock())
 }
