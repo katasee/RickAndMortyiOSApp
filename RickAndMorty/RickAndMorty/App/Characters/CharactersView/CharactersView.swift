@@ -9,25 +9,56 @@ import SwiftUI
 
 internal struct CharactersView: View {
     
-    @StateObject private var viewModel: CharactersViewModel
-
+    @ObservedObject private var viewModel: CharactersViewModel
+    
     internal init(
         viewModel: CharactersViewModel
     ) {
-        self._viewModel = .init(wrappedValue: viewModel)
+        self.viewModel = viewModel
     }
     
     internal var body: some View {
-        NavigationStack {
-            ScrollView {
+        Group {
+            if viewModel.update {
                 VStack(alignment: .leading) {
-                    title
-                    allCards
+                    Button {
+                        viewModel.update = false
+                    } label: {
+                        Image(systemName: "arrowshape.backward")
+                            .foregroundColor(.blue)
+                            .padding()
+                    }
+                    if let url = viewModel.url {
+                        RemoteWebView(
+                            viewModel: .init(
+                                url: .init(
+                                    string: url
+                                )
+                            )
+                        )
+                    }
+                }
+                
+            } else {
+                NavigationStack {
+                    ScrollView {
+                        VStack(alignment: .leading) {
+                            title
+                            allCards
+                        }
+                    }
+                    .padding(10)
+                    .task {
+                        await viewModel.loadCharacters()
+                    }
                 }
             }
-            .padding(10)
-            .task {
-                await viewModel.loadCharacters()
+        }
+        .task {
+            do {
+                try await viewModel.fetchData()
+            } catch {
+#warning("handle error properly")
             }
         }
     }

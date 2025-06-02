@@ -1,5 +1,5 @@
 //
-//  EpisodesView.swift
+//  SettingsView.swift
 //  RickAndMorty
 //
 //  Created by Anton on 30/05/2025.
@@ -7,12 +7,13 @@
 
 import SwiftUI
 
-internal struct EpisodesView: View {
+internal struct SettingsView: View {
+    
     internal var body: some View {
-        Text("Episodes View")
+        Text("Settings View")
     }
 }
 
 #Preview {
-    EpisodesView()
+    SettingsView()
 }

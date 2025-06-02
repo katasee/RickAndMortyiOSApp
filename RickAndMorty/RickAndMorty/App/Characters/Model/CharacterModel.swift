@@ -7,13 +7,13 @@
 
 internal struct CharacterModel: Identifiable, Sendable, Equatable {
     
-    let id: Int
-    let name: String
-    let status: String
-    let gender: String
-    let type: String
-    let species: String
-    let image: String
+    internal let id: Int
+    internal let name: String
+    internal let status: String
+    internal let gender: String
+    internal let type: String
+    internal let species: String
+    internal let image: String
     
     internal init(
         id: Int,

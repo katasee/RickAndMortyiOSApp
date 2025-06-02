@@ -8,6 +8,7 @@
 import SwiftUI
 
 internal struct LocationsView: View {
+    
     internal var body: some View {
         Text("Locations View")
     }

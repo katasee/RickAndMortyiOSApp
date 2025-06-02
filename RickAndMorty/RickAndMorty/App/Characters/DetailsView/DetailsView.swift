@@ -12,23 +12,23 @@ internal struct DetailsView: View {
     
     internal let details: CharacterModel
     
-    init(
-        details: CharacterModel
-    ) {
+    internal init(details: CharacterModel) {
         self.details = details
     }
     
     internal var body: some View {
+        VStack {
             image
-        VStack(spacing: 30) {
-            titlePanel
-            Spacer()
-                .navigationBarTitle(
-                    details.name,
-                    displayMode: .inline
-                )
+            VStack(spacing: 30) {
+                titlePanel
+                Spacer()
+                    .navigationBarTitle(
+                        details.name,
+                        displayMode: .inline
+                    )
+            }
+            .padding(10)
         }
-        .padding(10)
     }
     
     private var image: some View {
@@ -60,7 +60,7 @@ internal struct DetailsView: View {
                 color: .red
             )
             TitlePanelView(
-                bellLabel: details.type,
+                bellLabel: details.type.isEmpty ? "None": details.type,
                 title: "TYPE",
                 color: .purple
             )

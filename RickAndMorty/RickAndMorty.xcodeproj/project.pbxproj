@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		6EA7D95C2DEA1AD000A4F034 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 6EA7D95B2DEA1AD000A4F034 /* Kingfisher */; };
+		6EA7D9872DEBA8D900A4F034 /* FirebaseRemoteConfig in Frameworks */ = {isa = PBXBuildFile; productRef = 6EA7D9862DEBA8D900A4F034 /* FirebaseRemoteConfig */; };
+		6EA7D9892DEBA8ED00A4F034 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 6EA7D9882DEBA8ED00A4F034 /* FirebaseAnalytics */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +30,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				6EA7D95C2DEA1AD000A4F034 /* Kingfisher in Frameworks */,
+				6EA7D9872DEBA8D900A4F034 /* FirebaseRemoteConfig in Frameworks */,
+				6EA7D9892DEBA8ED00A4F034 /* FirebaseAnalytics in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -38,6 +42,7 @@
 			isa = PBXGroup;
 			children = (
 				6EA7D9302DEA094E00A4F034 /* RickAndMorty */,
+				6EA7D9852DEBA8D900A4F034 /* Frameworks */,
 				6EA7D92F2DEA094E00A4F034 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -48,6 +53,13 @@
 				6EA7D92E2DEA094E00A4F034 /* RickAndMorty.app */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		6EA7D9852DEBA8D900A4F034 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -71,6 +83,8 @@
 			name = RickAndMorty;
 			packageProductDependencies = (
 				6EA7D95B2DEA1AD000A4F034 /* Kingfisher */,
+				6EA7D9862DEBA8D900A4F034 /* FirebaseRemoteConfig */,
+				6EA7D9882DEBA8ED00A4F034 /* FirebaseAnalytics */,
 			);
 			productName = RickAndMorty;
 			productReference = 6EA7D92E2DEA094E00A4F034 /* RickAndMorty.app */;
@@ -102,6 +116,7 @@
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
 				6EA7D95A2DEA1AD000A4F034 /* XCRemoteSwiftPackageReference "Kingfisher" */,
+				6EA7D9842DEBA83C00A4F034 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 6EA7D92F2DEA094E00A4F034 /* Products */;
@@ -341,6 +356,14 @@
 				minimumVersion = 8.3.2;
 			};
 		};
+		6EA7D9842DEBA83C00A4F034 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 11.13.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -348,6 +371,16 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 6EA7D95A2DEA1AD000A4F034 /* XCRemoteSwiftPackageReference "Kingfisher" */;
 			productName = Kingfisher;
+		};
+		6EA7D9862DEBA8D900A4F034 /* FirebaseRemoteConfig */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 6EA7D9842DEBA83C00A4F034 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseRemoteConfig;
+		};
+		6EA7D9882DEBA8ED00A4F034 /* FirebaseAnalytics */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 6EA7D9842DEBA83C00A4F034 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAnalytics;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

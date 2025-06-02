@@ -7,36 +7,44 @@
 
 import SwiftUI
 
+internal enum Tab {
+    
+    case home
+    case locations
+    case setting
+    case episodes
+}
+
 internal struct TabBarView: View {
     
-    @State private var selection: String = "home"
+    @ObservedObject private var viewModel: TabBarViewModel
+    
+    internal init(viewModel: TabBarViewModel) {
+        self.viewModel = viewModel
+    }
     
     internal var body: some View {
-        TabView(selection: $selection) {
-            CharactersView(viewModel: CharactersViewModel())
+        TabView(selection: $viewModel.currentTab) {
+            CharactersView(viewModel: CharactersViewModel(remoteConfigService: RemoteConfigService()))
                 .tabItem {
                     Image(systemName: "person")
-                    Text("Characters")
+                        .id(Tab.home)
                 }
-            EpisodesView()
+            LocationsView()
                 .tabItem {
                     Image(systemName: "globe")
-                    Text("Locations")
+                        .id(Tab.locations)
                 }
             EpisodesView()
                 .tabItem {
                     Image(systemName: "tv")
-                    Text("Episodes")
+                        .id(Tab.episodes)
                 }
             SettingsView()
                 .tabItem {
                     Image(systemName: "gear")
-                    Text("Settings")
+                        .id(Tab.setting)
                 }
         }
     }
-}
-
-#Preview {
-    TabBarView()
 }
