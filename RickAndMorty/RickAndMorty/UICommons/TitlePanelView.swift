@@ -20,11 +20,11 @@ internal struct TitlePanelView: View {
                     .foregroundColor(color)
                 Text(bellLabel)
             }
-            .padding(20)
+           .padding(20)
             Spacer()
             Text(title)
                 .foregroundColor(color)
-                .frame(width: 190, height: 40)
+                .frame(maxWidth: .infinity, minHeight: 40)
                 .background(Color(UIColor.secondarySystemBackground))
                 .foregroundColor(.white)
                 .cornerRadius(5)

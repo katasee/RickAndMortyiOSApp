@@ -9,30 +9,51 @@ import SwiftUI
 import Kingfisher
 
 internal struct DetailsView: View {
-    
-    internal let details: CharacterModel
-    
-    internal init(details: CharacterModel) {
-        self.details = details
+
+    @ObservedObject private var viewModel: DetailsViewModel
+
+    internal init(viewModel: DetailsViewModel) {
+        self._viewModel = .init(wrappedValue: viewModel)
     }
     
     internal var body: some View {
-        VStack {
-            image
-            VStack(spacing: 30) {
-                titlePanel
-                Spacer()
-                    .navigationBarTitle(
-                        details.name,
-                        displayMode: .inline
-                    )
+        Group {
+            if let details: CharacterModel = viewModel.details {
+                VStack {
+                    image(url: details.image)
+                    VStack(spacing: 30) {
+                        titlePanel(using: details)
+                        Spacer()
+                            .navigationBarTitle(
+                                details.name,
+                                displayMode: .inline
+                            )
+                    }
+                    .padding(10)
+                }
+            } else {
+                ProgressView("Loading...")
             }
-            .padding(10)
+
+        }
+        .errorAlert(
+            title: "Error",
+            message: $viewModel.errorMessage,
+            buttonTitle: "Dismiss",
+            retryTitle: "Try Again",
+            retryAction: {
+                Task {
+                    await viewModel.loadCharacter()
+                }
+            }
+        )
+        .task {
+            await viewModel.loadCharacter()
         }
     }
     
-    private var image: some View {
-        KFImage(URL(string: details.image))
+    private func image(url: String) -> some View {
+        KFImage(URL(string: url))
             .resizable()
             .placeholder({
                 ZStack {
@@ -47,7 +68,7 @@ internal struct DetailsView: View {
         GridItem(.flexible()),
     ]
     
-    private var titlePanel: some View {
+    private func titlePanel(using details: CharacterModel) -> some View {
         LazyVGrid(columns: columns, spacing: 30) {
             TitlePanelView(
                 bellLabel: details.status,

@@ -20,18 +20,25 @@ internal struct RemoteWebView: View {
             WebView(
                 showLoader: $viewModel.isLoading,
                 url: url,
-                webView: viewModel.webView
+                webView: viewModel.webView,
+                onError: { _ in
+                    viewModel.errorMessage = "Something went wrong while loading the page."
+                }
             )
             .overlay(
                 Group {
                     if viewModel.isLoading {
-                        ProgressView("Loading...")
-                            .progressViewStyle(CircularProgressViewStyle())
-                            .padding()
-                            .background(Color(.systemBackground))
-                            .cornerRadius(10)
-                            .shadow(radius: 5)
+                        Loader()
                     }
+                }
+            )
+            .errorAlert(
+                title: "WebView Error",
+                message: $viewModel.errorMessage,
+                buttonTitle: "Dismiss",
+                retryTitle: "Try Again",
+                retryAction: {
+                    viewModel.refresh()
                 }
             )
         }

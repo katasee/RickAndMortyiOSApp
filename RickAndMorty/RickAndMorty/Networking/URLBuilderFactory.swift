@@ -11,8 +11,15 @@ internal enum URLBuilderFactory {
     
     internal static func characters() -> URLBuilder {
         .init(
-            baseURL: "https://rickandmortyapi.com",
-              path: "/api/character"
+            baseURL: Constants.baseURL,
+            path: "/api/character"
+        )
+    }
+    
+    internal static func character(by id: Int) -> URLBuilder {
+        .init(
+            baseURL: Constants.baseURL,
+            path: "/api/character/\(id)"
         )
     }
 }

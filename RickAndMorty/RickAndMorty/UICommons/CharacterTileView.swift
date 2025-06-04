@@ -34,10 +34,7 @@ internal struct CharacterTileView: View {
     private var cardImage: some View {
         KFImage(URL(string: card.image))
             .placeholder ({
-                ZStack {
-                    Rectangle()
-                    ProgressView()
-                }
+                ProgressView()
             })
             .resizable()
             .frame(
@@ -47,7 +44,7 @@ internal struct CharacterTileView: View {
             .aspectRatio(contentMode: .fill)
             .background(
                 RoundedRectangle(cornerRadius: 10)
-                    .fill(Color.secondary)
+                    .fill(Color.secondary.opacity(0.3))
             )
     }
     

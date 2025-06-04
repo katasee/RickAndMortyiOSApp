@@ -9,7 +9,12 @@ import SwiftUI
 
 struct Loader: View {
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        ProgressView("Loading...")
+            .progressViewStyle(CircularProgressViewStyle())
+            .padding()
+            .background(Color(.systemBackground))
+            .cornerRadius(10)
+            .shadow(radius: 5)
     }
 }
 

@@ -8,9 +8,11 @@
 import Foundation
 import WebKit
 
+@MainActor
 final class RemoteWebViewModel: ObservableObject {
     
     @Published internal var isLoading: Bool = false
+    @Published internal var errorMessage: String?
     internal let webView: WKWebView
     internal let url: URL?
     

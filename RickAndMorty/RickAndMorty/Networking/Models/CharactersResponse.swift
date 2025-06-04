@@ -7,13 +7,13 @@
 
 import Foundation
 
-internal struct CharacterResponse: Decodable {
+internal struct CharacterResponse: Decodable, Sendable {
     
     internal let info: Info?
-    internal let results: Array<CharacterResults>?
+    internal let results: Array<Character>?
 }
 
-internal struct Info: Decodable {
+internal struct Info: Decodable, Sendable {
     
     internal let count: Int?
     internal let pages: Int?
@@ -21,7 +21,7 @@ internal struct Info: Decodable {
     internal let prev: String?
 }
 
-internal struct CharacterResults: Decodable {
+internal struct Character: Decodable, Sendable {
     
     internal let id: Int?
     internal let name: String?
@@ -37,13 +37,13 @@ internal struct CharacterResults: Decodable {
     internal let created: String?
 }
 
-internal struct Origin: Decodable {
+internal struct Origin: Decodable, Sendable {
     
     internal let name: String?
     internal let url: String?
 }
 
-internal struct Location: Decodable {
+internal struct Location: Decodable, Sendable {
     
     internal let name: String?
     internal let url: String?

@@ -18,49 +18,29 @@ internal struct CharactersView: View {
     }
     
     internal var body: some View {
-        Group {
-            if viewModel.update {
+        NavigationStack {
+            ScrollView {
                 VStack(alignment: .leading) {
-                    Button {
-                        viewModel.update = false
-                    } label: {
-                        Image(systemName: "arrowshape.backward")
-                            .foregroundColor(.blue)
-                            .padding()
-                    }
-                    if let url = viewModel.url {
-                        RemoteWebView(
-                            viewModel: .init(
-                                url: .init(
-                                    string: url
-                                )
-                            )
-                        )
-                    }
-                }
-                
-            } else {
-                NavigationStack {
-                    ScrollView {
-                        VStack(alignment: .leading) {
-                            title
-                            allCards
-                        }
-                    }
-                    .padding(10)
-                    .task {
-                        await viewModel.loadCharacters()
-                    }
+                    title
+                    allCards
+                        .padding(.bottom, 10)
                 }
             }
-        }
-        .task {
-            do {
-                try await viewModel.fetchData()
-            } catch {
-#warning("handle error properly")
+            .task {
+                await viewModel.loadCharacters()
             }
         }
+        .errorAlert(
+            title: "Error",
+            message: $viewModel.errorMessage,
+            buttonTitle: "Dismiss",
+            retryTitle: "Try Again",
+            retryAction: {
+                Task {
+                    await viewModel.loadCharacters()
+                }
+            }
+        )
     }
     
     private var title: some View {
@@ -78,23 +58,26 @@ internal struct CharactersView: View {
         GridItem(.flexible())
     ]
     
+    @ViewBuilder
     private var allCards: some View {
-        LazyVGrid(columns: columns) {
-            ForEach(viewModel.dataForCharactersView, id: \.id) { card in
-                NavigationLink(destination: DetailsView(
-                    details: CharacterModel(
-                        id: card.id,
-                        name: card.name,
-                        status: card.status,
-                        gender: card.gender,
-                        type: card.type,
-                        species: card.species,
-                        image: card.image
-                    ))
-                ) {
-                    CharacterTileView(card: card)
+        if viewModel.isLoading {
+            ZStack {
+                Color.clear.ignoresSafeArea()
+                Loader()
+            }
+        } else {
+            LazyVGrid(columns: columns) {
+                ForEach(viewModel.dataForCharactersView, id: \.id) { card in
+                    NavigationLink(
+                        destination: DetailsView(
+                            viewModel: DetailsViewModel(id: card.id)
+                        )
+                    ) {
+                        CharacterTileView(card: card)
+                    }
                 }
             }
+            .padding(.horizontal, 10)
         }
     }
 }

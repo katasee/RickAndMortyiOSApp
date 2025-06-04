@@ -6,3 +6,8 @@
 //
 
 import Foundation
+
+internal enum Constants {
+
+    internal static let baseURL: String = "https://rickandmortyapi.com"
+}

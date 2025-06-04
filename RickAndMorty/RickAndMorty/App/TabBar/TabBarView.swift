@@ -25,7 +25,7 @@ internal struct TabBarView: View {
     
     internal var body: some View {
         TabView(selection: $viewModel.currentTab) {
-            CharactersView(viewModel: CharactersViewModel(remoteConfigService: RemoteConfigService()))
+            CharactersView(viewModel: CharactersViewModel())
                 .tabItem {
                     Image(systemName: "person")
                         .id(Tab.home)

@@ -8,7 +8,7 @@
 import Foundation
 import FirebaseRemoteConfig
 
-internal final class RemoteConfigService: NSObject {
+internal final class RemoteConfigService: NSObject, @unchecked Sendable {
     
     private lazy var remoteConfig: RemoteConfig = {
         let rc: RemoteConfig = RemoteConfig.remoteConfig()
@@ -18,23 +18,23 @@ internal final class RemoteConfigService: NSObject {
         return rc
     }()
     
-    private enum RemoteConfigKey {
-        static let needForceUpdate = "needForceUpdate"
-        static let redirectLink = "redirectLink"
-    }
-    
-    internal func fetchRemoteConfig() async throws -> (Bool, String?) {
+    internal func fetchRemoteConfig() async throws -> RemoteConfigModel {
         let config: RemoteConfigFetchAndActivateStatus = try await remoteConfig.fetchAndActivate()
         switch config {
         case .successFetchedFromRemote:
-            let update = remoteConfig.configValue(forKey: RemoteConfigKey.needForceUpdate).boolValue
-            let link = remoteConfig.configValue(forKey: RemoteConfigKey.redirectLink).stringValue
-            return (update, link)
+            let needForceUpdate: Bool = remoteConfig.configValue(forKey: RemoteConfigKey.needForceUpdate).boolValue
+            let redirectLink: String? = remoteConfig.configValue(forKey: RemoteConfigKey.redirectLink).stringValue
+            
+            return RemoteConfigModel(
+                needForceUpdate: needForceUpdate,
+                redirectLink: redirectLink
+            )
         case .successUsingPreFetchedData:
-            let update = remoteConfig.configValue(forKey: RemoteConfigKey.needForceUpdate).boolValue
-            return (update, nil)
+            let needForceUpdate: Bool = remoteConfig.configValue(forKey: RemoteConfigKey.needForceUpdate).boolValue
+            
+            return RemoteConfigModel(needForceUpdate: needForceUpdate)
         default:
-            return(false, nil)
+            return RemoteConfigModel(needForceUpdate: false)
         }
     }
 }

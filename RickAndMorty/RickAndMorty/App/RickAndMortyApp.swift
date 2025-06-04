@@ -8,22 +8,40 @@
 import SwiftUI
 import Firebase
 
-class AppDelegate: NSObject, UIApplicationDelegate {
-    func application(
-        _ application: UIApplication,
-        didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
-            FirebaseApp.configure()
-            return true
-        }
-}
-
 @main
 struct RickAndMortyApp: App {
+    
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
+    @StateObject private var appGate: AppGateViewModel = .init()
     
     internal var body: some Scene {
         WindowGroup {
-            TabBarView(viewModel: TabBarViewModel())
+            Group {
+                switch appGate.state {
+                case .loading:
+                    ProgressView("Loading...")
+                case let .showWebView(url):
+                    VStack(alignment: .leading) {
+                        Button {
+                            appGate.state = .showMainApp
+                        } label: {
+                            Image(systemName: "arrowshape.backward")
+                                .foregroundColor(.blue)
+                                .padding()
+                        }
+                        RemoteWebView(
+                            viewModel: .init(
+                                url: url
+                            )
+                        )
+                    }
+                case .showMainApp:
+                    TabBarView(viewModel: TabBarViewModel())
+                }
+            }
+            .task {
+                await appGate.determineLaunchScreen()
+            }
         }
     }
 }

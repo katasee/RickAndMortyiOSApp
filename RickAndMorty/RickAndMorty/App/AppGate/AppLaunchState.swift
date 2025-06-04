@@ -6,3 +6,10 @@
 //
 
 import Foundation
+
+internal enum AppLaunchState {
+
+    case loading
+    case showWebView(URL?)
+    case showMainApp
+}
